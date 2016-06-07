@@ -1,4 +1,3 @@
-# coding=cp949
 from subprocess import run, PIPE
 from urllib.request import urlopen
 from re import compile
@@ -19,12 +18,12 @@ for l in w:
 
 print('latest version :',v)
 
-c=compile(r'ЦђБе = (\d+)ms')
+c=compile(r'\r\n    .+ = (\d+)ms,')
 ps=[]
 for u, v in r:
   p=run('ping '+v, stdout=PIPE)
-  s=c.search(p.stdout.decode('cp949'))
-  p=int(s.group(1)) if s else 9999
+  s=c.search(p.stdout.decode('cp949')) # change this to your Windows encoding setting
+  p=int(s.group(1)) if s else float('inf')
   ps.append(p)
   print(v, p)
 
